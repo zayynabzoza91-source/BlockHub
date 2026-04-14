@@ -1,0 +1,124 @@
+ServerScriptService
+ └── AI Script
+
+StarterPlayerScripts
+ └── Stamina Script
+
+StarterGui
+ └── ScreenGui (الأزرار)
+
+ReplicatedStorage
+ └── RemoteEventslocal npc = script.Parent
+local humanoid = npc:WaitForChild("Humanoid")
+local root = npc:WaitForChild("HumanoidRootPart")
+
+local normalSpeed = 12
+local chaseSpeed = 20
+local detectionDistance = 40
+
+while true do
+    wait(0.2)
+    
+    local closestPlayer = nil
+    local shortestDistance = detectionDistance
+    
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            
+            local targetRoot = player.Character.HumanoidRootPart
+            local distance = (root.Position - targetRoot.Position).Magnitude
+            
+            if distance < shortestDistance then
+                shortestDistance = distance
+                closestPlayer = targetRoot
+            end
+        end
+    end
+    
+    if closestPlayer then
+        humanoid.WalkSpeed = chaseSpeed
+        humanoid:MoveTo(closestPlayer.Position)
+    else
+        humanoid.WalkSpeed = normalSpeed
+    end
+endfor _, player in pairs(game.Players:GetPlayers()) do
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        
+        local highlight = Instance.new("Highlight")
+        highlight.Parent = player.Character
+        highlight.FillTransparency = 0.5
+    end
+endlocal npc = script.Parent
+local humanoid = npc:WaitForChild("Humanoid")
+local root = npc:WaitForChild("HumanoidRootPart")
+
+local normalSpeed = 12
+local chaseSpeed = 20
+local detectionDistance = 40
+
+while true do
+    wait(0.2)
+    
+    local closestPlayer = nil
+    local shortestDistance = detectionDistance
+    
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            
+            local targetRootlocal stamina = 100
+local maxStamina = 100
+
+while true do
+    wait(0.1)
+    
+    stamina = maxStamina -- دايمًا فل
+endgame.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(char)
+        local hum = char:WaitForChild("Humanoid")
+        hum.WalkSpeed = 24 -- سرعة عالية دائمًا
+    end)
+end)local npc = script.Parent
+local humanoid = npc:WaitForChild("Humanoid")
+
+while true do
+    wait(1)
+    
+    for _, player in pairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            humanoid:MoveTo(player.Character.HumanoidRootPart.Position)
+        end
+    end
+endlocal player = game.Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local humanoid = char:WaitForChild("Humanoid")
+
+local stamina = 100
+local maxStamina = 100
+local running = false
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftShift then
+        running = true
+    end
+end)
+
+game:GetService("UserInputService").InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.LeftShift then
+        running = false
+        humanoid.WalkSpeed = 16
+    end
+end)
+
+while true do
+    wait(0.1)
+    
+    if running and stamina > 0 then
+        humanoid.WalkSpeed = 24
+        stamina -= 1
+    else
+        humanoid.WalkSpeed = 16
+        stamina += 0.5
+    end
+    
+    stamina = math.clamp(stamina, 0, maxStamina)
+end
